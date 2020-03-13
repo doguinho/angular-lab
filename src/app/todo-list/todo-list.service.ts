@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 export interface Todo {
   userId: number;
@@ -17,6 +17,10 @@ export class TodoListService {
 
   private todoList: Todo[]
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   constructor(private http: HttpClient) { }
 
   getTodos(): Observable<Todo[]> {
@@ -24,6 +28,14 @@ export class TodoListService {
       .pipe(
         catchError(this.handleError<Todo[]>('getTodos', []))
       );
+  }
+
+  /** POST: add a new hero to the server */
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.http.post<Todo>('https://jsonplaceholder.typicode.com/todos', todo, this.httpOptions).pipe(
+      tap((newTodo: Todo) => console.log(`added todo w/ id=${newTodo.id}`)),
+      catchError(this.handleError<Todo>('addTodo'))
+    );
   }
 
   /**
@@ -45,5 +57,6 @@ export class TodoListService {
       return of(result as T);
     };
   }
+
 
 }

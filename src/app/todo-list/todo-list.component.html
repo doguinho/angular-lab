@@ -1,8 +1,10 @@
-<ul class="todos">
-    <li *ngFor="let todo of loadedTodos">
-        <a routerLink="/detail/{{todo.id}}">
-            <span class="badge">{{todo.id}}</span> {{todo.title}}
-        </a>
-        <button class="delete" title="delete hero" (click)="delete(todo)">x</button>
-    </li>
-</ul>
+<mat-form-field class="example-full-width">
+    <mat-label>New Todo</mat-label>
+    <input #todoTitle matInput placeholder="Ex.: Comprar leite" value="">
+</mat-form-field>
+<button mat-button (click)="add(todoTitle.value);todoTitle.value=''">Add</button>
+<mat-selection-list #todoList>
+    <mat-list-option *ngFor="let todo of loadedTodos">
+        {{todo.id}} - {{todo.title}}
+    </mat-list-option>
+</mat-selection-list>

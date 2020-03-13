@@ -8,9 +8,9 @@ import { TodoListService, Todo } from './todo-list.service';
 })
 export class TodoListComponent implements OnInit {
 
-  private loadedTodos:Todo[]
+  loadedTodos: Todo[]
 
-  constructor(private todoService:TodoListService) { }
+  constructor(private todoService: TodoListService) { }
 
   ngOnInit(): void {
     this.todoService.getTodos().subscribe(
@@ -18,6 +18,15 @@ export class TodoListComponent implements OnInit {
         this.loadedTodos = todos
       }
     )
+  }
+
+  add(title: string): void {
+    title = title.trim();
+    if (!title) { return; }
+    this.todoService.addTodo({ title } as Todo)
+      .subscribe(todo => {
+        this.loadedTodos.push(todo);
+      });
   }
 
 }
