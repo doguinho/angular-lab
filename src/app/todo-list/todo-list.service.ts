@@ -17,6 +17,8 @@ export class TodoListService {
 
   private todoList: Todo[]
 
+  private todosUrl:string = "/api/todos"
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -24,17 +26,23 @@ export class TodoListService {
   constructor(private http: HttpClient) { }
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/users/1/todos')
+    return this.http.get<Todo[]>(this.todosUrl)
       .pipe(
         catchError(this.handleError<Todo[]>('getTodos', []))
       );
   }
 
-  /** POST: add a new hero to the server */
+
   addTodo(todo: Todo): Observable<Todo> {
-    return this.http.post<Todo>('https://jsonplaceholder.typicode.com/todos', todo, this.httpOptions).pipe(
+    return this.http.post<Todo>(this.todosUrl, todo, this.httpOptions).pipe(
       tap((newTodo: Todo) => console.log(`added todo w/ id=${newTodo.id}`)),
       catchError(this.handleError<Todo>('addTodo'))
+    );
+  }
+
+  updateHero (todo: Todo): Observable<Todo> {
+    return this.http.put(this.todosUrl, todo, this.httpOptions).pipe(
+      catchError(this.handleError<any>('updateTodo'))
     );
   }
 

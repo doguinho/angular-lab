@@ -29,4 +29,9 @@ export class TodoListComponent implements OnInit {
       });
   }
 
+  edit(todo:Todo){
+    console.log(todo);
+    
+  }
+
 }

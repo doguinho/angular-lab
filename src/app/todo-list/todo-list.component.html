@@ -1,10 +1,11 @@
-<mat-form-field class="example-full-width">
+
+<mat-form-field class="full-width">
     <mat-label>New Todo</mat-label>
     <input #todoTitle matInput placeholder="Ex.: Comprar leite" value="">
 </mat-form-field>
 <button mat-button (click)="add(todoTitle.value);todoTitle.value=''">Add</button>
 <mat-selection-list #todoList>
-    <mat-list-option *ngFor="let todo of loadedTodos">
+    <mat-list-option *ngFor="let todo of loadedTodos" (click)="edit(todo)">
         {{todo.id}} - {{todo.title}}
     </mat-list-option>
 </mat-selection-list>
