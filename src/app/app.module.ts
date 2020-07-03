@@ -20,13 +20,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { QuoteComponent } from './quote/quote.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     DashboardComponent,
-    NavigationComponent
+    NavigationComponent,
+    QuoteComponent
   ],
   imports: [
     BrowserModule,
